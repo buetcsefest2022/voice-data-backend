@@ -11,6 +11,8 @@ from .serializers import TextAudioMapSerializer
 from .models import TextAudioMap
 from django.db.models import Q
 
+import random
+
 # @api_view(['GET'])
 # def getText(request):
 #     dataObject = {"text":"hello world"}
@@ -30,7 +32,13 @@ def collectText():
         Q(last_accessed__isnull=True) |
         Q(last_accessed__lt=(datetime.now()-timedelta(hours=1)))
     )
-    return TextAudioMapSerializer(texts, many=True)
+    # print(texts[index])
+
+    textSerializer =  TextAudioMapSerializer(texts, many=True)
+    index = random.randint(0, len(textSerializer.data)-1)
+    # print("random index",index)
+    # print(textSerializer.data[index])
+    return textSerializer.data[index]
 
 
 class Text(
@@ -54,8 +62,8 @@ class Text(
         #     print('invalid', datetime.now())
         try:
             # texts = TextAudioMap.objects.all()
-            textSerializer = collectText()
-            return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
+            textData = collectText()
+            return Response({'textData': textData}, status=status.HTTP_200_OK)
         except TextAudioMap.DoesNotExist:
             return Response({"error": "error 404"}, status=status.HTTP_404_NOT_FOUND)
 
