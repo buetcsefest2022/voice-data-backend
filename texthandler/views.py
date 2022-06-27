@@ -1,4 +1,5 @@
 from cgitb import text
+from datetime import datetime, timedelta
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
@@ -8,7 +9,7 @@ from rest_framework import status
 # Create your views here.
 from .serializers import TextAudioMapSerializer
 from .models import TextAudioMap
-
+from django.db.models import Q
 
 # @api_view(['GET'])
 # def getText(request):
@@ -24,15 +25,36 @@ from .models import TextAudioMap
 #     return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
 
 
+def collectText():
+    texts = TextAudioMap.objects.filter(audio_filename__isnull=True).filter(
+        Q(last_accessed__isnull=True) |
+        Q(last_accessed__lt=(datetime.now()-timedelta(hours=1)))
+    )
+    return TextAudioMapSerializer(texts, many=True)
+
+
 class Text(
     APIView,
     UpdateModelMixin,
     DestroyModelMixin,
 ):
+
     def get(self, request):
+        # dataObject = {
+        #     "text":"with no audio file but accessed",
+        #     # "uploaded_by": "jayantasadhu4557@gmail.com",
+        #     # "audio_filename": "",
+        #     "was_accessed": True,
+        #     "last_accessed": datetime.now()
+        # }
+        # serializer = TextAudioMapSerializer(data=dataObject)
+        # if serializer.is_valid():
+        #     serializer.save()
+        # else:
+        #     print('invalid', datetime.now())
         try:
-            texts = TextAudioMap.objects.all()
-            textSerializer = TextAudioMapSerializer(texts, many=True)
+            # texts = TextAudioMap.objects.all()
+            textSerializer = collectText()
             return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
         except TextAudioMap.DoesNotExist:
             return Response({"error": "error 404"}, status=status.HTTP_404_NOT_FOUND)

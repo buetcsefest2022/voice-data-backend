@@ -11,10 +11,11 @@ class TextAudioMap(models.Model):
     audio_filename = models.CharField(
         max_length=200,
         default=None,
+        blank=True,
         null=True
     )
 
-    last_accessed = models.DateField(
+    last_accessed = models.DateTimeField(
         default=None,
         null=True
     )
@@ -28,7 +29,7 @@ class TextAudioMap(models.Model):
     uploaded_by = models.CharField(
         max_length=200,
         default=None,
-        blank=False,
+        blank=True,
         null=True
     )
     was_accessed = models.BooleanField(

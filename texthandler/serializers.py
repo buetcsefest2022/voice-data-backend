@@ -8,7 +8,7 @@ from .models import TextAudioMap
 
 class TextAudioMapSerializer(serializers.ModelSerializer):
     audio_filename = serializers.CharField(max_length=200, required=False)
-    last_accessed = serializers.DateField(required=False)
+    last_accessed = serializers.DateTimeField(required=False)
     text = serializers.CharField(max_length=300,required=False)
     uploaded_by = serializers.CharField(max_length=200,required=False)
     was_accessed = serializers.BooleanField(default=False)
