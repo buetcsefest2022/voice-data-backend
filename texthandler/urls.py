@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
 urlpatterns = [
-    path('', views.getText, name='gettext'),
+    path('', views.Text.as_view()),
+    path('<int:text_id>/',views.Text.as_view()),
 ]
