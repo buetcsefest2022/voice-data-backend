@@ -11,10 +11,10 @@ from .models import TextAudioMap
 
 @api_view(['GET'])
 def getText(request):
-    dataObject = {"audio_filename":"hello world"}
-    serializer = TextAudioMapSerializer(data=dataObject)
-    if serializer.is_valid():
-        serializer.save()
+    # dataObject = {"audio_filename":"hello world"}
+    # serializer = TextAudioMapSerializer(data=dataObject)
+    # if serializer.is_valid():
+    #     serializer.save()
     try:
         texts = TextAudioMap.objects.all()
     except TextAudioMap.DoesNotExist:
