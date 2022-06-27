@@ -30,15 +30,19 @@ import random
 def collectText():
     texts = TextAudioMap.objects.filter(audio_filename__isnull=True).filter(
         Q(last_accessed__isnull=True) |
-        Q(last_accessed__lt=(datetime.now()-timedelta(hours=1)))
+        Q(last_accessed__lt=(datetime.now()-timedelta(seconds=1)))
     )
-    # print(texts[index])
 
     textSerializer =  TextAudioMapSerializer(texts, many=True)
-    index = random.randint(0, len(textSerializer.data)-1)
-    # print("random index",index)
-    # print(textSerializer.data[index])
-    return textSerializer.data[index]
+    if len(textSerializer.data) > 0:
+        index = random.randint(0, len(textSerializer.data)-1)
+        id = textSerializer.data[index]['id']
+        print("id==", id)
+        TextAudioMap.objects.filter(id=id).update(last_accessed=datetime.now())
+        # print(textSerializer.data[index])
+        return textSerializer.data[index]
+    else:
+        return {}
 
 
 class Text(
