@@ -11,7 +11,8 @@ class TextAudioMapSerializer(serializers.ModelSerializer):
     last_accessed = serializers.DateTimeField(required=False)
     text = serializers.CharField(max_length=300,required=False)
     uploaded_by = serializers.CharField(max_length=200,required=False)
-    was_accessed = serializers.BooleanField(default=False)
+    # was_accessed = serializers.BooleanField(default=False)
+    audio_url = serializers.URLField(max_length=3000, required=False)
 
     def create(self, validated_data):
         return TextAudioMap.objects.create(
@@ -43,6 +44,6 @@ class TextAudioMapSerializer(serializers.ModelSerializer):
             'last_accessed',
             'text',
             'uploaded_by',
-            'was_accessed',
-            'id'
+            'id',
+            'audio_url'
         )

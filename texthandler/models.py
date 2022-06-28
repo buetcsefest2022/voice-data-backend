@@ -37,7 +37,7 @@ class TextAudioMap(models.Model):
     # )
     audio_url = models.URLField(
         default=None,
-        max_length = 200,
+        max_length = 3000,
         blank=True,
         null=True
     )

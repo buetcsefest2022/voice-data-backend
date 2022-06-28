@@ -26,6 +26,19 @@ import random
 #     textSerializer = TextAudioMapSerializer(texts, many=True)
 #     return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def addDataTobase(request):
+    print("add command from admin")
+
+    for data in request.data:
+        print(data)
+        t = TextAudioMap(text = data['text'])
+        t.save()
+        
+    return Response({"success": True}, status=status.HTTP_200_OK )
+
+
+
 
 def collectText():
     texts = TextAudioMap.objects.filter(audio_filename__isnull=True).filter(
@@ -37,7 +50,7 @@ def collectText():
     if len(textSerializer.data) > 0:
         index = random.randint(0, len(textSerializer.data)-1)
         id = textSerializer.data[index]['id']
-        print("id==", id)
+        # print("id==", id)
         TextAudioMap.objects.filter(id=id).update(last_accessed=datetime.now())
         # print(textSerializer.data[index])
         return textSerializer.data[index]
@@ -74,13 +87,17 @@ class Text(
 
     def put(self, request, text_id=None, *args, **kwargs):
         try:
-            # print(request)
+            print("Inside put")
+            print(request.data)
             textData = TextAudioMap.objects.get(id=text_id)
             textSerializer = TextAudioMapSerializer(textData, request.data)
 
             if textSerializer.is_valid():
                 print("Valid")
+                # print(textSerializer.data)
                 textSerializer.save()
+            else:
+                print(textSerializer.data)
             return Response({"success": True}, status=status.HTTP_200_OK )
         except TextAudioMap.DoesNotExist:
             return Response({"error": "error 404"}, status=status.HTTP_404_NOT_FOUND)
