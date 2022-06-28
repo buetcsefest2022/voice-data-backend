@@ -77,8 +77,9 @@ class Text(
             # print(request)
             textData = TextAudioMap.objects.get(id=text_id)
             textSerializer = TextAudioMapSerializer(textData, request.data)
-            # print("data:",textSerializer.data)
+
             if textSerializer.is_valid():
+                print("Valid")
                 textSerializer.save()
             return Response({"success": True}, status=status.HTTP_200_OK )
         except TextAudioMap.DoesNotExist:
