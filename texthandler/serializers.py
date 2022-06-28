@@ -19,7 +19,8 @@ class TextAudioMapSerializer(serializers.ModelSerializer):
             last_accessed=validated_data.get('last_accessed'),
             text=validated_data.get('text'),
             uploaded_by=validated_data.get('uploaded_by'),
-            was_accessed=validated_data.get('was_accessed')
+            # was_accessed=validated_data.get('was_accessed')
+            audio_url=validated_data.get('audio_url')
         )
 
     def update(self, textAudioMap, validated_data):
@@ -30,7 +31,8 @@ class TextAudioMapSerializer(serializers.ModelSerializer):
             'text') else textAudioMap.text
         textAudioMap.uploaded_by = validated_data.get('uploaded_by') if validated_data.get(
             'uploaded_by') else textAudioMap.uploaded_by
-        textAudioMap.was_accessed = validated_data.get('was_accessed') if validated_data.get('was_accessed') else textAudioMap.was_accessed
+        textAudioMap.audio_url = validated_data.get('audio_url') if validated_data.get('audio_url') else textAudioMap.audio_url
+        # textAudioMap.was_accessed = validated_data.get('was_accessed') if validated_data.get('was_accessed') else textAudioMap.was_accessed
         textAudioMap.save()
         return textAudioMap
 

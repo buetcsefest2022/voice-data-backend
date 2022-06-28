@@ -32,7 +32,13 @@ class TextAudioMap(models.Model):
         blank=True,
         null=True
     )
-    was_accessed = models.BooleanField(
-        default=None
+    # was_accessed = models.BooleanField(
+    #     default=None
+    # )
+    audio_url = models.URLField(
+        default=None,
+        max_length = 200,
+        blank=True,
+        null=True
     )
 
