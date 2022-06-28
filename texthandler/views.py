@@ -26,6 +26,8 @@ import random
 #     textSerializer = TextAudioMapSerializer(texts, many=True)
 #     return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
 
+text_lock_time = 3600
+
 @api_view(['POST'])
 def addDataTobase(request):
     print("add command from admin")
@@ -43,7 +45,7 @@ def addDataTobase(request):
 def collectText():
     texts = TextAudioMap.objects.filter(audio_filename__isnull=True).filter(
         Q(last_accessed__isnull=True) |
-        Q(last_accessed__lt=(datetime.now()-timedelta(seconds=1)))
+        Q(last_accessed__lt=(datetime.now()-timedelta(seconds=text_lock_time)))
     )
 
     textSerializer =  TextAudioMapSerializer(texts, many=True)
