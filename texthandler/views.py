@@ -17,6 +17,10 @@ from django.db.models import Q
 
 import random
 
+uids = [
+    "UUMfVDkAj1X4yQqayRpNFl1rb452",
+]
+
 # @api_view(['GET'])
 # def getText(request):
 #     dataObject = {"text":"hello world"}
@@ -39,6 +43,12 @@ text_lock_time = 1800
 n_tries_limit = 20
 user_blockage_time = 10*3600 # in seconds
 uploads_max_limit = 200
+
+def addUserUID():
+    for ids in uids:
+        u = UserActivity(user_uid = ids)
+        u.save()
+    
 
 @api_view(['POST'])
 def addDataTobase(request):
@@ -123,6 +133,7 @@ class Text(
         #     print('invalid', timezone.now())
         try:
             # texts = TextAudioMap.objects.all()
+            addUserUID()
             
             user_uid = request.data["user_uid"]
             # print(user_uid)
