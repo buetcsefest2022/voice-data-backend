@@ -30,15 +30,15 @@ import random
 #     textSerializer = TextAudioMapSerializer(texts, many=True)
 #     return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
 
-text_lock_time = 3
-n_tries_limit = 5
-user_blockage_time = 120 # in seconds
-uploads_max_limit = 4
+# text_lock_time = 3
+# n_tries_limit = 5
+# user_blockage_time = 120 # in seconds
+# uploads_max_limit = 4
 
-# text_lock_time = 3600
-# n_tries_limit = 50
-# user_blockage_time = 10*3600 # in seconds
-# uploads_max_limit = 150
+text_lock_time = 1800
+n_tries_limit = 20
+user_blockage_time = 10*3600 # in seconds
+uploads_max_limit = 200
 
 @api_view(['POST'])
 def addDataTobase(request):
