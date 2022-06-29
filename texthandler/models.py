@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import IntegerField
 
 # Create your models here.
 
@@ -42,3 +43,34 @@ class TextAudioMap(models.Model):
         null=True
     )
 
+class UserActivity(models.Model):
+    id = models.AutoField(
+        primary_key=True
+    )
+
+    last_tried = models.DateTimeField(
+        default=None,
+        null=True,
+    )
+
+    last_upload = models.DateTimeField(
+        default= None,
+        null=True
+    )
+
+    n_tries = models.IntegerField(
+        default = 0,
+        null=False 
+    )
+
+    is_blocked = models.BooleanField(
+        default=False,
+        null=True 
+    )
+
+    user_uid = models.CharField (
+        max_length=200,
+        default=None,
+        blank=False,
+        null=False 
+    )

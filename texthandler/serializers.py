@@ -3,6 +3,7 @@ from importlib.metadata import requires
 # from typing_extensions import Required
 from rest_framework import serializers
 from .models import TextAudioMap
+from .models import UserActivity
 
 
 
@@ -46,4 +47,44 @@ class TextAudioMapSerializer(serializers.ModelSerializer):
             'uploaded_by',
             'id',
             'audio_url'
+        )
+
+
+class UserActivitySerializer(serializers.ModelSerializer):
+    n_tries = serializers.IntegerField(required=False)
+    user_uid = serializers.CharField(max_length=200, required=False)
+    last_tried = serializers.DateTimeField(required=False)
+    last_upload = serializers.DateTimeField(required=False)
+    is_blocked = serializers.BooleanField(required=False)
+
+    def create(self, validated_data):
+        return TextAudioMap.objects.create(
+            n_tries=validated_data.get('n_tries'),
+            user_uid=validated_data.get('user_uid'),
+            last_tried=validated_data.get('last_tried'),
+            last_upload=validated_data.get('last_upload'),
+            is_blocked=validated_data.get('is_blocked')
+        )
+
+    def update(self, userActivity, validated_data):
+        userActivity.n_tries = validated_data.get('n_tries') if validated_data.get('n_tries') else userActivity.n_tries
+        userActivity.user_uid = validated_data.get('user_uid') if validated_data.get(
+            'user_uid') else userActivity.user_uid
+        userActivity.last_tried = validated_data.get('last_tried') if validated_data.get(
+            'last_tried') else userActivity.last_tried
+        userActivity.last_upload = validated_data.get('last_upload') if validated_data.get(
+            'last_upload') else userActivity.last_upload
+        userActivity.is_blocked = validated_data.get('is_blocked') if validated_data.get('is_blocked') else userActivity.is_blocked
+        userActivity.save()
+        return userActivity
+
+    class Meta:
+        model = UserActivity
+        fields = (
+            'last_tried',
+            'last_upload',
+            'n_tries',
+            'is_blocked',
+            'id',
+            'user_uid'
         )
