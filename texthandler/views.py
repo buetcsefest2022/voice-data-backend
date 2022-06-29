@@ -17,24 +17,6 @@ from django.db.models import Q
 
 import random
 
-i = 0
-uids = [
-    "mn2R1S5QlAbWOu7DmDIqExSVHBv1",
-    "uw2xoVtJbYSHsHh0f9biajgrM453",
-    "j3MQdQkWJFXBggji4QU4GjSSbBs2",
-    "NqSGkXLL0zTvs8VXjUkEmhYogLM2",
-    "j8IUN3kJSfOHQljO3xkZ3vylkVC2",
-    "iwzKEmB7eQhsl8GRqNLLoe0NVJP2",
-    "8tio5mH3LTbMLqdlsMn7mjNnwjt2",
-    "kK4tBZcjqtbydQZhiPquQ6RvzJq2",
-    "0U2niHwyIZW0uSqOFhXOxKi0f142",
-    "cHwk5mTlQkP6KwffL4NB2laEmWk1",
-    "fxv34OswzaeX3FhhcTdOjB4ejwh1",
-    "y4iDe0sGI8Xm9dYlrIjD9aY1SiE3",
-    "bNWyeIuSZqWXzTUgKoTKwC1NoA03",
-    "ConzXowGtVSIRAr6S9s5XUNbz1k1",
-]
-
 # @api_view(['GET'])
 # def getText(request):
 #     dataObject = {"text":"hello world"}
@@ -48,24 +30,24 @@ uids = [
 #     textSerializer = TextAudioMapSerializer(texts, many=True)
 #     return Response({'texts': textSerializer.data}, status=status.HTTP_200_OK)
 
-# text_lock_time = 3
-# n_tries_limit = 5
-# user_blockage_time = 120 # in seconds
-# uploads_max_limit = 4
+text_lock_time = 3
+n_tries_limit = 5
+user_blockage_time = 120 # in seconds
+uploads_max_limit = 4
 
-text_lock_time = 1800
-n_tries_limit = 20
-user_blockage_time = 10*3600 # in seconds
-uploads_max_limit = 500
+# text_lock_time = 1800
+# n_tries_limit = 20
+# user_blockage_time = 10*3600 # in seconds
+# uploads_max_limit = 500
 
-def addUserUID():
-    global i 
-    if i > 0:
-        return
-    for ids in uids:
-        u = UserActivity(user_uid = ids)
-        u.save()
-    i = i+1
+# def addUserUID():
+#     global i 
+#     if i > 0:
+#         return
+#     for ids in uids:
+#         u = UserActivity(user_uid = ids)
+#         u.save()
+#     i = i+1
     
 
 @api_view(['POST'])
@@ -151,7 +133,6 @@ class Text(
         #     print('invalid', timezone.now())
         try:
             # texts = TextAudioMap.objects.all()
-            # addUserUID()
             
             user_uid = request.data["user_uid"]
             # print(user_uid)
