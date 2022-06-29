@@ -56,9 +56,10 @@ uids = [
 text_lock_time = 1800
 n_tries_limit = 20
 user_blockage_time = 10*3600 # in seconds
-uploads_max_limit = 200
+uploads_max_limit = 500
 
 def addUserUID():
+    global i 
     if i > 0:
         return
     for ids in uids:
