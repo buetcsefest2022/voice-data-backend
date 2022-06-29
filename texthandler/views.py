@@ -19,7 +19,7 @@ import random
 
 i = 0
 uids = [
-    # "mn2R1S5QlAbWOu7DmDIqExSVHBv1",
+    "mn2R1S5QlAbWOu7DmDIqExSVHBv1",
     "uw2xoVtJbYSHsHh0f9biajgrM453",
     "j3MQdQkWJFXBggji4QU4GjSSbBs2",
     "NqSGkXLL0zTvs8VXjUkEmhYogLM2",
@@ -151,7 +151,7 @@ class Text(
         #     print('invalid', timezone.now())
         try:
             # texts = TextAudioMap.objects.all()
-            addUserUID()
+            # addUserUID()
             
             user_uid = request.data["user_uid"]
             # print(user_uid)
