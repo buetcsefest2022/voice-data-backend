@@ -57,7 +57,7 @@ def addDataTobase(request):
 
     for data in request.data:
         # print(data)
-        sleep(0.001)
+        sleep(0.01)
         try:
             t = TextAudioMap(text = data['text'])
             t.save()
