@@ -1,5 +1,6 @@
 from cgitb import text
 from datetime import timedelta
+from time import sleep
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
@@ -56,9 +57,14 @@ def addDataTobase(request):
 
     for data in request.data:
         # print(data)
-        t = TextAudioMap(text = data['text'])
-        t.save()
-        
+        sleep(0.001)
+        try:
+            t = TextAudioMap(text = data['text'])
+            t.save()
+        except:
+            print("mara khaisi: ")
+            print(data['text'])
+
     return Response({"success": True}, status=status.HTTP_200_OK )
 
 @api_view(["POST"])
