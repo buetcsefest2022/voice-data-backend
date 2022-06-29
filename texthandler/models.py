@@ -74,3 +74,8 @@ class UserActivity(models.Model):
         blank=False,
         null=False 
     )
+
+    n_uploads = models.IntegerField(
+        default=0,
+        null=True
+    )
