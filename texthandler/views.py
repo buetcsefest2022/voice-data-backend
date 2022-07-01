@@ -74,6 +74,14 @@ def userUploadsCount(request):
     userCount = TextAudioMap.objects.filter(uploaded_by=userEmail).count()
     return Response({"success": True, "upload_count": userCount}, status=status.HTTP_200_OK )
 
+
+@api_view(["POST"])
+def registerUser(request):
+    user_uid = request.data["user_uid"]
+    t = UserActivity(user_uid = user_uid)
+    t.save()
+    return Response({"success": True}, status=status.HTTP_200_OK )
+
 def chekIfBlocked(user_uid):
     user_activity_data = UserActivity.objects.filter(user_uid=user_uid).values()[0]
     if user_activity_data['n_uploads'] >= uploads_max_limit:

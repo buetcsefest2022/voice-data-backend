@@ -5,4 +5,5 @@ urlpatterns = [
     path('<int:text_id>/',views.Text.as_view()),
     path('adminDataUpload/', views.addDataTobase),
     path("upCount/", views.userUploadsCount),
+    path("regUser/", views.registerUser),
 ]
