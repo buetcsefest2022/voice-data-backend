@@ -77,13 +77,13 @@ def userUploadsCount(request):
 
 @api_view(["POST"])
 def registerUser(request):
+    # print('inside register')
     user_uid = request.data["user_uid"]
-    if UserActivity.objects.filter(user_uid=user_uid) == 0:
+    if UserActivity.objects.filter(user_uid=user_uid).count() == 0:
+
         t = UserActivity(user_uid = user_uid)
         t.save()
-        return Response({"success": True}, status=status.HTTP_200_OK )
-    else:
-        return Response({"success": False}, status=status.HTTP_200_OK )
+    return Response({"success": True}, status=status.HTTP_200_OK )
 
 def chekIfBlocked(user_uid):
     user_activity_data = UserActivity.objects.filter(user_uid=user_uid).values()[0]
