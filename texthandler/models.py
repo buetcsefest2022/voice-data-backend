@@ -22,7 +22,7 @@ class TextAudioMap(models.Model):
     )
 
     text = models.CharField(
-        max_length=300,
+        max_length=2000,
         default=None,
         blank=False,
         null=True
